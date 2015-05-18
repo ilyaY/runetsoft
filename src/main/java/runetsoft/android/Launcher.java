@@ -2,28 +2,31 @@ package runetsoft.android;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
+import runetsoft.android.http.HttpService;
+import runetsoft.android.model.Model;
+import runetsoft.android.model.ModelMapper;
 
 public class Launcher extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    System.out.println("nCreate() YATSISHIN");
+    System.out.println("onCreate() YATSISHIN");
 
 
     setContentView(R.layout.main);
-    System.out.println(findViewById(R.id.container));
 
-    LinearLayout container = (LinearLayout) findViewById(R.id.container);
-    for (int i = 0; i < 100; i++) {
+    final Model model = new Model();
 
-      TextView text = new TextView(this);
-      text.setText("yatsishin-" + i);
 
-      container.addView(text);
-
-    }
+    final LinearLayout container = (LinearLayout) findViewById(R.id.container);
+    new HttpService(model).update(new Runnable() {
+      @Override
+      public void run() {
+        new ModelMapper(model, container, Launcher.this).update();
+      }
+    });
   }
 }
