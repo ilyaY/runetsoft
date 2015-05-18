@@ -19,6 +19,7 @@ public class HttpService {
 
   private static final String URL = "http://office.runetsoft.ru:8081/RNSWeb/images/notifiernew.ashx";
   private static final String DATE = "Date";
+  private static final String TYPE = "Type";
   private static final String NAME = "Name";
   private static final String DESCRIPTION = "Description";
 
@@ -60,8 +61,15 @@ public class HttpService {
     for (Object obj : root.getChildren()) {
       Element item = (Element) obj;
 
-      Message message = new Message(item.getChildText(DATE), item.getChildText(NAME), item.getChildText(DESCRIPTION));
+      Message message = new Message(
+          item.getChildText(DATE),
+          item.getChildText(TYPE),
+          item.getChildText(NAME),
+          item.getChildText(DESCRIPTION)
+      );
       myModel.add(message);
     }
+
+    myModel.reverse();
   }
 }

@@ -15,6 +15,10 @@ public class Model {
     myMessages.clear();
   }
 
+  public void reverse() {
+    Collections.reverse(myMessages);
+  }
+
   public List<Message> getMessages() {
     return Collections.unmodifiableList(myMessages);
   }
